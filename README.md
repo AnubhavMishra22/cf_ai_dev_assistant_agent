@@ -27,6 +27,8 @@ A powerful AI-powered developer assistant built on Cloudflare's platform, featur
 
 ### Local Development
 
+**Note**: Local development may have limited Workers AI access. For full functionality, please test the deployed version.
+
 1. **Clone the repository**
 ```bash
 git clone <your-repo-url>
@@ -47,6 +49,8 @@ npm start
 ```
 http://localhost:5173/
 ```
+
+**Recommended**: Test the live deployment instead: https://cloudflare.anubhavmishram.workers.dev/
 
 ### Deployment
 
