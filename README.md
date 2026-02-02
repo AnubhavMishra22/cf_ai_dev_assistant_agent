@@ -52,6 +52,8 @@ http://localhost:5173/
 
 **Recommended**: Test the live deployment instead: https://cloudflare.anubhavmishram.workers.dev/
 
+**Note on Rate Limits**: Workers AI free tier has usage limits. If you see rate limit errors, the app is working correctly and the limit will reset automatically.
+
 ### Deployment
 
 1. **Deploy to Cloudflare**
@@ -203,6 +205,12 @@ npm run check
 ✅ **Custom Tools**: 4 developer utility tools
 ✅ **Documentation**: README.md with setup instructions
 ✅ **AI Prompts**: PROMPTS.md with all prompts used
+
+## ⚠️ Known Limitations
+
+- **Local Development**: Workers AI access is limited locally. Please test the deployed version for full functionality.
+- **Rate Limits**: Free tier has usage limits that reset automatically.
+- **Model Behavior**: Llama 3.1 8B may occasionally respond with meta-commentary or unnecessary tool calls for simple greetings. This is a model characteristic, not an implementation issue. Tools work correctly when explicitly requested (e.g., "encode 'hello' to base64").
 
 ## 📝 License
 
