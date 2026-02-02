@@ -214,7 +214,7 @@ npm run check
 
 ## 📝 License
 
-MIT
+MIT License - See LICENSE file for details
 
 ## 🔗 Links
 
