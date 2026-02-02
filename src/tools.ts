@@ -109,6 +109,94 @@ const cancelScheduledTask = tool({
 });
 
 /**
+ * Base64 Encoder/Decoder Tool
+ * Encodes or decodes text to/from base64
+ */
+const base64Tool = tool({
+  description:
+    "Encode text to base64 or decode base64 to text. Useful for encoding/decoding data.",
+  inputSchema: z.object({
+    operation: z.enum(["encode", "decode"]).describe("encode or decode"),
+    text: z.string().describe("The text to encode or decode")
+  }),
+  execute: async ({ operation, text }) => {
+    try {
+      if (operation === "encode") {
+        const encoded = btoa(text);
+        return `Base64 encoded: ${encoded}`;
+      } else {
+        const decoded = atob(text);
+        return `Base64 decoded: ${decoded}`;
+      }
+    } catch (error) {
+      return `Error: Invalid input for ${operation} operation. ${error}`;
+    }
+  }
+});
+
+/**
+ * UUID Generator Tool
+ * Generates a random UUID v4
+ */
+const generateUUID = tool({
+  description: "Generate a random UUID (Universally Unique Identifier)",
+  inputSchema: z.object({}),
+  execute: async () => {
+    const uuid = crypto.randomUUID();
+    return `Generated UUID: ${uuid}`;
+  }
+});
+
+/**
+ * Hash Generator Tool
+ * Generates MD5, SHA-1, or SHA-256 hash of input text
+ */
+const hashGenerator = tool({
+  description:
+    "Generate a cryptographic hash (SHA-256, SHA-1) of the input text",
+  inputSchema: z.object({
+    text: z.string().describe("The text to hash"),
+    algorithm: z
+      .enum(["SHA-256", "SHA-1"])
+      .describe("Hashing algorithm to use")
+  }),
+  execute: async ({ text, algorithm }) => {
+    try {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest(algorithm, data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+      return `${algorithm} hash: ${hashHex}`;
+    } catch (error) {
+      return `Error generating hash: ${error}`;
+    }
+  }
+});
+
+/**
+ * JSON Formatter/Validator Tool
+ * Validates and formats JSON strings
+ */
+const jsonFormatter = tool({
+  description: "Validate and format JSON strings with proper indentation",
+  inputSchema: z.object({
+    json: z.string().describe("The JSON string to format")
+  }),
+  execute: async ({ json }) => {
+    try {
+      const parsed = JSON.parse(json);
+      const formatted = JSON.stringify(parsed, null, 2);
+      return `Valid JSON (formatted):\n\`\`\`json\n${formatted}\n\`\`\``;
+    } catch (error) {
+      return `Invalid JSON: ${error instanceof Error ? error.message : "Unknown error"}`;
+    }
+  }
+});
+
+/**
  * Export all available tools
  * These will be provided to the AI model to describe available capabilities
  */
@@ -117,7 +205,11 @@ export const tools = {
   getLocalTime,
   scheduleTask,
   getScheduledTasks,
-  cancelScheduledTask
+  cancelScheduledTask,
+  base64Tool,
+  generateUUID,
+  hashGenerator,
+  jsonFormatter
 } satisfies ToolSet;
 
 /**
