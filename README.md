@@ -56,7 +56,7 @@ npm run deploy
 ```
 
 2. **Access your deployed app**
-The deployment will provide a URL like: `https://cloudflare.<your-subdomain>.workers.dev`
+**Live Demo**: https://cloudflare.anubhavmishram.workers.dev/
 
 ## 💡 Usage Examples
 
